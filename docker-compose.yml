@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  identityservice:
+    image: ${DOCKER_REGISTRY-}identityservice
+    build:
+      context: .
+      dockerfile: src/IdentityService/Dockerfile
+    environment:
+      Database__Host: postgres-db
+      Database__DbName: identities-db
+      Database__UserName: test
+      Database__Password: test
+
+  postgres-db:
+    container_name: "postgres-db"
+    image: postgres:14.3
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: test
+      POSTGRES_USER: test
+      POSTGRES_DB: identities-db
+    ports:
+      - "25432:5432"
