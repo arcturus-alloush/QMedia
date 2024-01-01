@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "vNy2DhwM+PM9kR4tTQtESNHhr3y5JRPkJwThT3Lgx0ezCurFbj/2lBcsTsbwM2w3Pq3/gkQo+dTlrxY8AbsPHg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Ahmad\\repos\\QMedia\\src\\ApiGateway\\ApiGateway.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ahmad\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.5\\microsoft.visualstudio.azure.containers.tools.targets.1.19.5.nupkg.sha512",
+    "C:\\Users\\Ahmad\\.nuget\\packages\\system.io.hashing\\7.0.0\\system.io.hashing.7.0.0.nupkg.sha512",
+    "C:\\Users\\Ahmad\\.nuget\\packages\\yarp.reverseproxy\\2.1.0\\yarp.reverseproxy.2.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}

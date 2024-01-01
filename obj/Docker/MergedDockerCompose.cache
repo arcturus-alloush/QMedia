@@ -1,14 +1,53 @@
 name: dockercompose14629030268975711739
 services:
-  identityservice:
+  apigateway:
     build:
       context: C:\Users\Ahmad\repos\QMedia
-      dockerfile: src/IdentityService/Dockerfile
+      dockerfile: src/ApiGateway/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_HTTP_PORTS: "8080"
       ASPNETCORE_HTTPS_PORTS: "8081"
-    image: identityservice
+    image: apigateway
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        protocol: tcp
+      - mode: ingress
+        target: 8080
+        published: "8080"
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        published: "8081"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\Ahmad\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\Ahmad\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+  authorizationservice:
+    build:
+      context: C:\Users\Ahmad\repos\QMedia
+      dockerfile: src/AuthorizationService/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+    image: authorizationservice
     networks:
       default: null
     ports:
@@ -31,6 +70,56 @@ services:
         read_only: true
         bind:
           create_host_path: true
+  identitiyservice:
+    build:
+      context: C:\Users\Ahmad\repos\QMedia
+      dockerfile: src/IdentitiyService/Dockerfile
+    container_name: identitiyservice
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+      Database__DbName: identities-db
+      Database__Host: postgres-db
+      Database__Password: test
+      Database__UserName: test
+    image: identitiyservice
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 80
+        protocol: tcp
+      - mode: ingress
+        target: 443
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\Ahmad\AppData\Roaming/Microsoft/UserSecrets
+        target: /root/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\Ahmad\AppData\Roaming/ASP.NET/Https
+        target: /root/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+  postgres-db:
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: identities-db
+      POSTGRES_PASSWORD: test
+      POSTGRES_USER: test
+    image: postgres:14.3
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 5432
+        published: "25432"
+        protocol: tcp
+    restart: always
 networks:
   default:
     name: dockercompose14629030268975711739_default

@@ -4,11 +4,13 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "composeLaunchAction": "LaunchBrowser",
-      "composeLaunchServiceName": "identityservice",
-      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}",
+      "composeLaunchServiceName": "apigateway",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/identity/",
       "serviceActions": {
-        "identityservice": "StartDebugging",
-        "postgres-db": "StartWithoutDebugging"
+        "postgres-db": "StartWithoutDebugging",
+        "identitiyservice": "StartDebugging",
+        "apigateway": "StartDebugging",
+        "authorizationservice": "StartDebugging"
       }
     }
   }

@@ -1,11 +1,21 @@
 version: '3.4'
 
 services:
-  identityservice:
-    image: ${DOCKER_REGISTRY-}identityservice
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
     build:
       context: .
-      dockerfile: src/IdentityService/Dockerfile
+      dockerfile: src/ApiGateway/Dockerfile
+    ports:
+      - "8081:8081"
+      - "8080:8080"
+
+  identitiyservice:
+    container_name: identitiyservice
+    image: ${DOCKER_REGISTRY-}identitiyservice
+    build:
+      context: .
+      dockerfile: src/IdentitiyService/Dockerfile
     environment:
       Database__Host: postgres-db
       Database__DbName: identities-db
@@ -22,3 +32,11 @@ services:
       POSTGRES_DB: identities-db
     ports:
       - "25432:5432"
+
+
+  authorizationservice:
+    image: ${DOCKER_REGISTRY-}authorizationservice
+    build:
+      context: .
+      dockerfile: src/AuthorizationService/Dockerfile
+
